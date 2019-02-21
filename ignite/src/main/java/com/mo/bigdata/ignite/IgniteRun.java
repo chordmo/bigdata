@@ -14,7 +14,7 @@ import com.mo.bigdata.model.Address;
 
 public class IgniteRun {
 	public static void run() {
-		ClientConfiguration cfg = new ClientConfiguration().setAddresses("node1:10800");
+		ClientConfiguration cfg = new ClientConfiguration().setAddresses("node1:10800", "node2:10800", "node3:10800");
 
 		try (IgniteClient igniteClient = Ignition.startClient(cfg)) {
 			System.out.println();
@@ -42,10 +42,11 @@ public class IgniteRun {
 			System.err.format("Unexpected failure: %s\n", e);
 		}
 	}
+
 	public static void get() {
 //		ClientConfiguration cfg = new ClientConfiguration().setAddresses("node1:10800");
-		ClientConfiguration cfg = new ClientConfiguration().setAddresses("node2:10800");
-//		ClientConfiguration cfg = new ClientConfiguration().setAddresses("node3:10800");
+//		ClientConfiguration cfg = new ClientConfiguration().setAddresses("node1:10800", "node2:10800", "node3:10800");
+		ClientConfiguration cfg = new ClientConfiguration().setAddresses("node3:10800");
 		try (IgniteClient igniteClient = Ignition.startClient(cfg)) {
 			System.out.println();
 			System.out.println(">>> Thin client put-get example started.");
@@ -57,7 +58,6 @@ public class IgniteRun {
 			System.out.format(">>> Created cache [%s].\n", CACHE_NAME);
 
 			Integer key = 1;
-			
 
 			Address cachedVal = (Address) cache.get(key);
 
@@ -70,9 +70,8 @@ public class IgniteRun {
 	}
 
 	public static void main(String[] args) throws IgniteException {
-//		run();
+		run();
 		get();
 	}
-	
-	
+
 }
