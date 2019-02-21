@@ -67,4 +67,32 @@ public class PhoenixHelloWorld {
 			}
 		}
 	}
+
+	public void select() {
+		// Create variables
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		// Connect to the database
+		try {
+			connection = DriverManager.getConnection("jdbc:phoenix:node1");
+			// Create a JDBC statement
+			statement = connection.createStatement();
+			// Query for table
+			ps = connection.prepareStatement("select * from javatest");
+			rs = ps.executeQuery();
+			System.out.println("Table Values");
+			while (rs.next()) {
+				Integer myKey = rs.getInt(1);
+				String myColumn = rs.getString(2);
+				System.out.println("\tRow: " + myKey + " = " + myColumn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
 }
